@@ -1,5 +1,5 @@
 const express = require('express')
-//const http = require('http')
+const https = require('https')
 const path = require('path')
 const socketio = require('socket.io')
 const Filter = require('bad-words')
@@ -7,7 +7,7 @@ const { genarateMessage, generateLocationMessage } = require('./utils/messages')
 const { addUser, removeUser, getUser, getUsersInRoom } = require('./utils/users')
 
 const app = express()
-//const server = http.createServer(app)
+const server = https.createServer(app)
 
 const port = process.env.PORT || 3000
 const publicDirectoryPath = path.join(__dirname, '../public')
