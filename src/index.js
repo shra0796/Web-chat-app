@@ -1,6 +1,6 @@
-const express = require('express')
-const https = require('https')
 const path = require('path')
+const https = require('http')
+const express = require('express')
 const socketio = require('socket.io')
 const Filter = require('bad-words')
 const { genarateMessage, generateLocationMessage } = require('./utils/messages')
@@ -8,17 +8,14 @@ const { addUser, removeUser, getUser, getUsersInRoom } = require('./utils/users'
 
 const app = express()
 const server = https.createServer(app)
+const io = socketio(server)
 
 const port = process.env.PORT || 3000
 const publicDirectoryPath = path.join(__dirname, '../public')
 
 app.use(express.static(publicDirectoryPath))
 
-server.listen(port, () => {
-    console.log('serve is up on port '+port)
-})
 
-const io = socketio(server)
 //let count = 0
 
 io.on('connection', (socket) => {
@@ -72,5 +69,9 @@ io.on('connection', (socket) => {
             })
         }
     })
+})
+
+server.listen(port, () => {
+    console.log('serve is up on port '+port)
 })
 
